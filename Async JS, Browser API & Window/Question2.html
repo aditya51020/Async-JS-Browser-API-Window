@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX request using the XMLHttpRequest</title>
+</head>
+<body>
+    <h1>User Names</h1>
+    <ul id="userList"></ul>
+
+    <script>
+        var xml = new XMLHttpRequest();
+        xml.open('GET', 'https://jsonplaceholder.typicode.com/users', true);
+        
+
+        xml.onreadystatechange = function(){
+            if(xml.readyState === 4 && xml.status === 200){
+                var users = JSON.parse(xml.responseText);
+                users.forEach(function(user) {
+                    console.log(user.name);
+                });
+
+                const userList = document.getElementById('userList');
+                users.forEach(function(user) {
+                    var listItem = document.createElement('li');
+                    listItem.textContent = user.name;
+                    userList.appendChild(listItem);
+                });
+            }
+        };
+
+
+        xml.send();
+    </script>
+</body>
+</html>
